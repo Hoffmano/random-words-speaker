@@ -1,113 +1,425 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [word, setWord] = useState("");
+  const words = [
+    "paz",
+    "não",
+    "céu",
+    "fel",
+    "ser",
+    "vil",
+    "mal",
+    "sob",
+    "mãe",
+    "ver",
+    "ter",
+    "ego",
+    "bem",
+    "mas",
+    "dom",
+    "bom",
+    "vir",
+    "são",
+    "dar",
+    "vão",
+    "ora",
+    "que",
+    "era",
+    "elo",
+    "nós",
+    "luz",
+    "com",
+    "seu",
+    "réu",
+    "mim",
+    "foi",
+    "tal",
+    "rol",
+    "uma",
+    "até",
+    "lua",
+    "hum",
+    "fim",
+    "por",
+    "dor",
+    "pós",
+    "vez",
+    "vis",
+    "ato",
+    "sol",
+    "sem",
+    "pai",
+    "dia",
+    "dou",
+    "irá",
+    "pro",
+    "eis",
+    "ler",
+    "rua",
+    "tez",
+    "ode",
+    "nem",
+    "tão",
+    "voz",
+    "ajo",
+    "fiz",
+    "gay",
+    "meu",
+    "lei",
+    "voo",
+    "mau",
+    "afã",
+    "mão",
+    "pôr",
+    "num",
+    "dês",
+    "olá",
+    "for",
+    "rio",
+    "sua",
+    "cia",
+    "lar",
+    "daí",
+    "jus",
+    "fez",
+    "ira",
+    "via",
+    "som",
+    "amo",
+    "sim",
+    "nau",
+    "rei",
+    "más",
+    "uso",
+    "tem",
+    "jaz",
+    "mês",
+    "boa",
+    "asa",
+    "ido",
+    "uns",
+    "pal",
+    "aia",
+    "lhe",
+    "clã",
+    "amor",
+    "fato",
+    "viés",
+    "mito",
+    "você",
+    "como",
+    "caos",
+    "esmo",
+    "brio",
+    "ação",
+    "vide",
+    "sede",
+    "pois",
+    "após",
+    "vida",
+    "casa",
+    "saga",
+    "medo",
+    "auge",
+    "ônus",
+    "ermo",
+    "vovó",
+    "suma",
+    "sina",
+    "além",
+    "mote",
+    "mais",
+    "pela",
+    "tolo",
+    "urge",
+    "idem",
+    "zelo",
+    "crer",
+    "apto",
+    "veio",
+    "tudo",
+    "pude",
+    "amar",
+    "ruim",
+    "área",
+    "para",
+    "rude",
+    "será",
+    "coxo",
+    "ater",
+    "cota",
+    "soar",
+    "doce",
+    "fase",
+    "ente",
+    "trás",
+    "auto",
+    "logo",
+    "voga",
+    "deus",
+    "onde",
+    "pelo",
+    "alma",
+    "ante",
+    "jugo",
+    "sido",
+    "rima",
+    "cedo",
+    "arte",
+    "meio",
+    "meta",
+    "traz",
+    "numa",
+    "sela",
+    "cujo",
+    "isso",
+    "noia",
+    "cela",
+    "teor",
+    "sair",
+    "face",
+    "asco",
+    "nojo",
+    "alvo",
+    "foco",
+    "ódio",
+    "pose",
+    "alto",
+    "base",
+    "agir",
+    "vale",
+    "teve",
+    "todo",
+    "ócio",
+    "rito",
+    "eita",
+    "irão",
+    "novo",
+    "ágil",
+    "alva",
+    "tese",
+    "bojo",
+    "alta",
+    "quer",
+    "orla",
+    "sagaz",
+    "âmago",
+    "negro",
+    "termo",
+    "êxito",
+    "mexer",
+    "nobre",
+    "senso",
+    "afeto",
+    "algoz",
+    "ética",
+    "plena",
+    "fazer",
+    "tênue",
+    "assim",
+    "mútua",
+    "vigor",
+    "sobre",
+    "aquém",
+    "sutil",
+    "porém",
+    "seção",
+    "poder",
+    "fosse",
+    "sanar",
+    "ideia",
+    "cerne",
+    "audaz",
+    "moral",
+    "inato",
+    "desde",
+    "muito",
+    "justo",
+    "quiçá",
+    "honra",
+    "sonho",
+    "torpe",
+    "razão",
+    "amigo",
+    "ícone",
+    "etnia",
+    "fútil",
+    "égide",
+    "anexo",
+    "tange",
+    "dengo",
+    "haver",
+    "lapso",
+    "expor",
+    "então",
+    "tempo",
+    "seara",
+    "mútuo",
+    "boçal",
+    "hábil",
+    "casal",
+    "saber",
+    "ávido",
+    "pesar",
+    "ardil",
+    "graça",
+    "dizer",
+    "óbice",
+    "causa",
+    "dever",
+    "sendo",
+    "genro",
+    "coser",
+    "tenaz",
+    "xibiu",
+    "pária",
+    "estar",
+    "posse",
+    "brado",
+    "crivo",
+    "ainda",
+    "prole",
+    "comum",
+    "temor",
+    "ápice",
+    "corja",
+    "ânimo",
+    "detém",
+    "pauta",
+    "ceder",
+    "assaz",
+    "ânsia",
+    "culto",
+    "fugaz",
+    "censo",
+    "digno",
+    "mundo",
+    "atroz",
+    "forte",
+    "gleba",
+    "vício",
+    "vulgo",
+    "cozer",
+    "valha",
+    "criar",
+    "exceto",
+    "cínico",
+    "idôneo",
+    "âmbito",
+    "néscio",
+    "mister",
+    "índole",
+    "vereda",
+    "apogeu",
+    "inócuo",
+    "convém",
+    "defina",
+    "utopia",
+    "escopo",
+    "sádico",
+    "ênfase",
+    "idiota",
+    "mérito",
+    "casual",
+    "alusão",
+    "hostil",
+    "anseio",
+    "cético",
+    "legado",
+    "gentil",
+    "hétero",
+    "pressa",
+    "alheio",
+    "nocivo",
+    "paixão",
+    "clichê",
+    "infame",
+    "exímio",
+    "afável",
+    "dádiva",
+    "adorno",
+    "também",
+    "êxtase",
+    "larica",
+    "sóbrio",
+    "aferir",
+    "otário",
+    "adesão",
+    "astuto",
+    "sessão",
+    "solene",
+    "glória",
+    "limiar",
+    "julgar",
+    "embora",
+    "ensejo",
+    "hábito",
+    "apreço",
+    "formal",
+    "lábaro",
+    "ímpeto",
+    "eficaz",
+    "outrem",
+    "nuance",
+    "dispor",
+    "júbilo",
+    "ocioso",
+    "perene",
+    "difuso",
+    "alento",
+    "escusa",
+    "facção",
+    "cessão",
+    "exílio",
+    "ilação",
+    "lúdico",
+    "abster",
+    "objeto",
+    "acesso",
+    "alçada",
+    "desejo",
+    "mulher",
+    "acento",
+    "axioma",
+    "buscar",
+    "tácito",
+    "sanção",
+    "etéreo",
+    "isento",
+    "mazela",
+    "cobiça",
+    "quando",
+    "cortês",
+    "sisudo",
+    "penhor",
+    "eximir",
+    "avidez",
+    "prazer",
+    "receio",
+    "remoto",
+    "vulgar",
+    "fático",
+    "sempre",
+    "nômade",
+    "adágio",
+  ];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * words.length);
+      setWord(words[randomIndex]);
+    }, 500);
+
+    // Limpar o intervalo quando o componente for desmontado
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div>
+      <div className="text-white">{word}</div>;
+    </div>
   );
 }
