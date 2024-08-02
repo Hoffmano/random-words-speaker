@@ -408,7 +408,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const intervalId = setInterval(async () => {
       const randomIndex = Math.floor(Math.random() * words.length);
       setWord(words[randomIndex]);
     }, 500);
@@ -417,9 +417,26 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const speak = () => {
+    console.log(process.env.NEXT_PUBLIC_VOICERSS);
+    fetch(
+      `http://api.voicerss.org/?key=${process.env.NEXT_PUBLIC_VOICERSS}&hl=pt-br&src=${word}&v=Dinis&f=48khz_16bit_stereo`,
+    )
+      .then((response) => response.blob())
+      .then((blob) => {
+        const audioUrl = URL.createObjectURL(blob);
+        const audioPlayer = document.getElementById("audioPlayer");
+        audioPlayer.src = audioUrl;
+        audioPlayer.play();
+      })
+      .catch((error) => console.error("Error:", error));
+  };
   return (
     <div>
-      <div className="text-white">{word}</div>;
+      <button type="button" onClick={speak}>
+        Speak
+      </button>
+      <audio id="audioPlayer" controls></audio>
     </div>
   );
 }
